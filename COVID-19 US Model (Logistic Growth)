@@ -39,6 +39,8 @@ def logistic_model(t,k,t_star,M):
 def infect(function, x, y, z):
     t0 = "01/22/20"
     Date = datetime.strptime(t0, "%m/%d/%y")
+    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow_date = tomorrow.strftime("%m/%d/%Y")
     
     # Function will return rate of change, t* & carrying capacity
     fit = curve_fit(function, x, y)
@@ -64,11 +66,11 @@ def infect(function, x, y, z):
     # Predicting tomorrow's infections & deaths
     tomorrow = t_star + 1
     exp_inf = logistic_model(tomorrow, rate, t_star, carry_cap)
-    print("The estimated total number of infections for the following day is", int(exp_inf), "people")
+    print("The estimated total number of infections for", tomorrow_date, "is", int(exp_inf), "people")
     
     tmr_exp_inf = exp_inf - y[-1]
     tmr_exp_deaths = int(mortality_rate * tmr_exp_inf)
-    print("The estimated number of deaths for the following day is", tmr_exp_deaths, "people")
+    print("The estimated number of deaths for", tomorrow_date, "is", tmr_exp_deaths,"people")
         
     # Solving & predicting the end date
     sol = int(fsolve(lambda x : logistic_model(x,rate,t_star,carry_cap) - int(carry_cap), t_star))
