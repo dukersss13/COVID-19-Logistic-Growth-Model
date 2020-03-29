@@ -54,6 +54,7 @@ def infect(function, x, y, z):
 
     print("The current infected population is", int(confirmed[-1]))
     print("The current mortality rate is", int(mortality_rate*100),"%")
+    
     # Printing out the data
     t_starDate = Date + timedelta(days= t_star)
     print("The infection rate is", round(rate,0),"with the standard error of", round(errors[0],3))
