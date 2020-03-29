@@ -12,6 +12,7 @@ The first function cleans and extracts cases from the United States.
 The second is the Logistic Growth function/equation.
 The third uses the outputs from the first two functions and does the computations. 
 
+(Number of infections implies the number of confirmed cases ONLY).
 The outputs are:
 The current mortality rate.
 
