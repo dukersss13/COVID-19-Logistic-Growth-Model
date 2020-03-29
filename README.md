@@ -14,13 +14,19 @@ The third uses the outputs from the first two functions and does the computation
 
 The outputs are:
 The current mortality rate.
+
 The date with the highest infection rate.
+
 The estimated carrying capacity.
+
 The total number of infections for the following day.
+
 The expected number of deaths for the following day.
 
 The logistic growth plot.
 
 The expected end date.
+
 The expected number of deaths by that date.
+
 The expected mortality rate by that date.
