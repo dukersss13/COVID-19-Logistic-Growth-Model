@@ -6,6 +6,7 @@ from scipy.optimize import curve_fit
 from datetime import datetime  
 from datetime import timedelta 
 from scipy.optimize import fsolve
+plt.style.use('seaborn')
 %matplotlib inline
 
 confirmed_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
@@ -92,7 +93,7 @@ def infect(function, x, y, z):
     plt.title("COVID-19 Logistic Curve in U.S")
     plt.legend(fontsize = 12)
     plt.xlabel("Days since Jan 22nd 2020", fontsize = 12)
-    plt.ylabel("Total number of infected people", fontsize = 12)
+    plt.ylabel("Total Number of Infected People", fontsize = 12)
     plt.ylim((min(y),carry_cap*1.1))
     plt.show()
     print("The expected end date is", EndDate)
