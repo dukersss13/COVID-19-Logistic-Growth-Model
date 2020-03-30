@@ -43,7 +43,7 @@ def infect(function, x, y, z):
     tomorrow = datetime.now() + timedelta(days=1)
     tomorrow_date = tomorrow.strftime("%m/%d/%Y")
     
-    # Function will return rate of change, t* & carrying capacity
+    # Curve_fit will return rate of change, t* & carrying capacity along with the covariance matrix.
     fit = curve_fit(function, x, y)
     param = fit[0]
     cov = fit[1]
