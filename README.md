@@ -2,6 +2,7 @@
 
 # Abstract
 The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic in the United States. The main assumption made is human intervention. It is assumed that with cautionary measures and human intervention, the pandemic will eventually approach a Carrying Capacity thus leading the infection rate to tail off. 
+The model is a work in progress. More updates and modifications will be added.
 
 # Data
 Main data sets are from the World Health Organization. They are csv files of Confirmed, Deaths and Recovered cases around the world. For this particular model, I will be only looking at U.S cases. These data sets are updated daily at 12 A.M ET.
