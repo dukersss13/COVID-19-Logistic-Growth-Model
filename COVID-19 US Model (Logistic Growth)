@@ -38,12 +38,12 @@ def logistic_model(t,k,t_star,M):
     return (M)/(1+np.exp(-(t-t_star)/k))
     
 def infect(function, x, y, z):
-    t0 = "01/22/20"
-    Date = datetime.strptime(t0, "%m/%d/%y")
-    tomorrow = datetime.now() + timedelta(days=1)
+    t0 = date(2020,1,22)
+    tomorrow = date.today() + timedelta(days=1)
     tomorrow_date = tomorrow.strftime("%m/%d/%Y")
+    delta = tomorrow - t0 # Days between tomorrow's date & 1/22/20
     
-    # Curve_fit will return rate of change, t* & carrying capacity along with the covariance matrix.
+    # Function will return rate of change, t* & carrying capacity
     fit = curve_fit(function, x, y)
     param = fit[0]
     cov = fit[1]
@@ -52,21 +52,21 @@ def infect(function, x, y, z):
     carry_cap = param[2]
     errors = [np.sqrt(cov[i][i]) for i in [0,1,2]]
     
-    mortality_rate = (z[-1])/(y[-1])
-    exp_deaths = mortality_rate * carry_cap
+    mortality_rate = (z[-1])/(y[-1]) # Latest total confirmed deaths / total confirmed cases
+    exp_deaths = mortality_rate * carry_cap # Expected end date deaths = MR * Carrying Capacity
 
     print("The current infected population is", int(confirmed[-1]))
     print("The current mortality rate is", int(mortality_rate*100),"%")
     
     # Printing out the data
-    t_starDate = Date + timedelta(days= t_star)
+    t_starDate = t0 + timedelta(days= t_star)
     print("The infection rate is", round(rate,0),"with the standard error of", round(errors[0],3))
     print("The date with the highest infection rate",t_starDate, "with the standard error of", round(errors[1],3))
     print("The estimated carrying capacity is", int(carry_cap),"people with the standard error of", round(errors[2],3))
     
     # Predicting tomorrow's infections & deaths
-    tomorrow = t_star + 1
-    exp_inf = logistic_model(tomorrow, rate, t_star, carry_cap)
+    days_til_tomorrow = delta.days 
+    exp_inf = logistic_model(days_til_tomorrow, rate, t_star, carry_cap)
     print("The estimated total number of infections for", tomorrow_date, "is", int(exp_inf), "people")
     
     tmr_exp_inf = exp_inf - y[-1]
@@ -75,7 +75,8 @@ def infect(function, x, y, z):
         
     # Solving & predicting the end date
     sol = int(fsolve(lambda x : logistic_model(x,rate,t_star,carry_cap) - int(carry_cap), t_star))
-    EndDate = Date + timedelta(days= sol)
+    EndDate = t0 + timedelta(days= sol)
+    EndDatenew = EndDate.strftime("%m/%d/%Y")
     EndDate_MR = (exp_deaths/carry_cap)*100
     
     # Plotting the rest of the logistic curve
@@ -87,16 +88,18 @@ def infect(function, x, y, z):
     z = list(x) + pred_x
 
     # Predicted logistic curve
-    plt.scatter(tomorrow, exp_inf, linewidth = 1, color = 'k', label = "Tomorrow's Prediction")
+    plt.scatter(days_til_tomorrow, exp_inf, linewidth = 1, color = 'k', label = "Tomorrow's Prediction")
     plt.plot(z, [logistic_model(i,rate,t_star,carry_cap) for i in z], linestyle = '--', lw = 2, 
              label = "Logistic Model")
-    plt.title("COVID-19 Logistic Curve in U.S")
-    plt.legend(fontsize = 12)
-    plt.xlabel("Days since Jan 22nd 2020", fontsize = 12)
-    plt.ylabel("Total Number of Infected People", fontsize = 12)
+    plt.title("COVID-19 Logistic Curve in U.S", fontsize = 15)
+    plt.legend(fontsize = 13)
+    plt.xlabel("Days since Jan 22nd 2020", fontsize = 13)
+    plt.ylabel("Total Number of Infected People", fontsize = 13)
     plt.ylim((min(y),carry_cap*1.1))
+    plt.xticks(fontsize = 13)
+    plt.yticks(fontsize = 13)
     plt.show()
-    print("The expected end date is", EndDate)
+    print("The expected end date is", EndDatenew)
     print("The expected number of deaths is", int(exp_deaths))
     print("The expected end date mortality rate is", round(EndDate_MR,2),"%")
     
