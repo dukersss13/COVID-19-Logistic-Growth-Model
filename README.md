@@ -6,6 +6,8 @@ The following model uses Logistic Growth to model the trend of the novel COVID-1
 # Data
 Main data sets are from the World Health Organization. They are csv files of Confirmed, Deaths and Recovered cases around the world. For this particular model, I will be only looking at U.S cases. These data sets are updated daily at 12 A.M ET.
 
+Sources: https://github.com/dukersss13/COVID-19
+
 # Description
 The model is consisted of three main functions:
 The first function cleans and extracts cases from the United States.
@@ -14,6 +16,7 @@ The third uses the outputs from the first two functions and does the computation
 
 (Number of infections implies the number of confirmed cases ONLY).
 The outputs are:
+
 The current mortality rate.
 
 The date with the highest infection rate.
