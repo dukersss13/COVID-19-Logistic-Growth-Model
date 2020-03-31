@@ -168,7 +168,8 @@ def analyze(function, x, y, z, location):
             analyze(logistic_model, days2, state_confirmed, state_deaths)
         elif selection == 3:
             print("Goodbye & stay healthy!")
-   
+            break
+            
    # Calling the function
    
    menu(global_confirmed_url, global_deaths_url, US_confirmed_url, US_deaths_url)
