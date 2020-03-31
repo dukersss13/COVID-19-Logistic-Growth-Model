@@ -55,8 +55,33 @@ def clean_state(url1, url2):
 def logistic_model(t,k,t_star,M):
     return (M)/(1+np.exp(-(t-t_star)/k))
     
-def analyze(function, x, y, z):
-    location = str(input("Region name for your plot: "))
+# This function calculates the % error from the predictions made the previous day.
+def error(function, x, y, z):
+    t0 = date(2020,1,22)
+    today = date.today()
+    delta = today - t0
+    fit = curve_fit(function, x[:-2], y[:-2])
+    param = fit[0]
+    cov = fit[1]
+    rate = param[0]
+    t_star = param[1]
+    carry_cap = param[2]
+    errors = [np.sqrt(cov[i][i]) for i in [0,1,2]]
+    
+    mortality_rate = (z[-2])/(y[-2]) # Latest total confirmed deaths / total confirmed cases
+    predicted_deaths = mortality_rate * carry_cap
+    
+    t_starDate = t0 + timedelta(days = t_star)
+    days_til_today = delta.days 
+    pred_inf = logistic_model(days_til_today, rate, t_star, carry_cap)
+    
+    inf_error = abs((pred_inf - y[-1])/y[-1]) * 100
+    deaths_error = abs((predicted_deaths - z[-1])/ z[-1])
+    return inf_error, deaths_error
+
+# This function is very similar to the one above, but does the computation based on today's updated data & make predictions.
+ 
+def analyze(function, x, y, z, location):
     t0 = date(2020,1,22)
     tomorrow = date.today() + timedelta(days=1)
     tomorrow_date = tomorrow.strftime("%m/%d/%Y")
@@ -79,37 +104,41 @@ def analyze(function, x, y, z):
     
     # Printing out the data
     t_starDate = t0 + timedelta(days= t_star)
-    print("The infection rate is", round(rate,0),"with the standard error of", round(errors[0],3))
-    print("The date with the highest infection rate",t_starDate)
-    print("The estimated carrying capacity is", int(carry_cap),"people with the standard error of", round(errors[2],3))
+    print("The infection rate is", round(rate,0), "with the standard error of", round(errors[0],3))
+    print("The date with the highest infection rate", t_starDate)
+    print("The estimated carrying capacity is", int(carry_cap), "+/-", round(errors[2],0),"people")
+    
+    # Calculating the percentage error from yesterday's predictions
+    inf_error, deaths_error = error(function, x, y, z)
     
     # Predicting tomorrow's infections & deaths
     days_til_tomorrow = delta.days 
     exp_inf = logistic_model(days_til_tomorrow, rate, t_star, carry_cap)
-    print("The estimated total number of infections for", tomorrow_date, "is", int(exp_inf), "people")
+    print("The estimated total number of infections for", tomorrow_date, "is", int(exp_inf), "+/-", 
+          int(inf_error*exp_inf), "people")
     
     tmr_exp_inf = exp_inf - y[-1]
     tmr_exp_deaths = int(mortality_rate * tmr_exp_inf)
-    print("The estimated number of deaths for", tomorrow_date, "is", tmr_exp_deaths,"people")
-        
+    print("The estimated number of deaths for", tomorrow_date, "is", tmr_exp_deaths,"+/-", 
+          int(deaths_error*tmr_exp_deaths),"people")
+    
+    # Plotting the logistic curve
+    plt.figure(figsize=(6, 6))
+    
+    # Real data
+    plt.scatter(x, y ,label = "Real Data", color = "r")
+    # Predicted logistic curve
+    plt.scatter(days_til_tomorrow, exp_inf, linewidth = 1, color = 'k', label = "Tomorrow's Prediction")
+    
     # Solving & predicting the end date
     sol = int(fsolve(lambda x : function(x,rate,t_star,carry_cap) - int(carry_cap), t_star))
-    EndDate = t0 + timedelta(days= sol)
+    EndDate = t0 + timedelta(days = sol)
     EndDatenew = EndDate.strftime("%m/%d/%Y")
     EndDate_MR = (exp_deaths/carry_cap)*100
     
-    # Plotting the rest of the logistic curve
     pred_x = list(range(max(x),sol))
-    plt.figure(figsize=(6, 6))
-
-    # Real data
-    plt.scatter(x, y ,label = "Real Data", color = "r")
     z = list(x) + pred_x
-
-    # Predicted logistic curve
-    plt.scatter(days_til_tomorrow, exp_inf, linewidth = 1, color = 'k', label = "Tomorrow's Prediction")
-    plt.plot(z, [logistic_model(i,rate,t_star,carry_cap) for i in z], linestyle = '--', lw = 2, 
-             label = "Logistic Model")
+    plt.plot(z, [logistic_model(i,rate,t_star,carry_cap) for i in z], linestyle = '--', lw = 2, label = "Logistic Model")
     plt.title("COVID-19 Logistic Curve in "+ location, fontsize = 15)
     plt.legend(fontsize = 13)
     plt.xlabel("Days since Jan 22nd 2020", fontsize = 13)
