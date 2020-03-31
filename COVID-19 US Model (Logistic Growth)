@@ -18,7 +18,7 @@ US_deaths_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/maste
 
 # Filter data by country
 def clean_country(url1, url2):
-    country = str(input("What country would you like to look at? "))
+    country = str(input("Select a country: "))
     data1 = pd.read_csv(url1)
     data2 = pd.read_csv(url2)
     choice = data1['Country/Region'] == country
@@ -37,7 +37,7 @@ def clean_country(url1, url2):
 def clean_state(url1, url2):
     data1 = pd.read_csv(url1)
     data2 = pd.read_csv(url2)
-    state = str(input("Name your state: "))
+    state = str(input("Select a US state/region: "))
     filtER = data1['Province_State'] == state
     data1 = data1[filtER]
     data2 = data2[filtER]
@@ -157,7 +157,7 @@ def analyze(function, x, y, z, location):
     selection = 0
     while selection != 3:
         print("1. Analyze a Country")
-        print("2. Analyze a U.S region")
+        print("2. Analyze a U.S state/region")
         print("3. Quit")
         selection = int(input("Please enter a selection: "))
         if selection == 1:
