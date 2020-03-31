@@ -143,4 +143,3 @@ def analyze(function, x, y, z):
    # Calling the function
    
    menu(global_confirmed_url, global_deaths_url, US_confirmed_url, US_deaths_url)
-            break
