@@ -9,35 +9,57 @@ from scipy.optimize import fsolve
 plt.style.use('seaborn')
 %matplotlib inline
 
-confirmed_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+global_confirmed_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+global_deaths_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 
-deaths_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+US_confirmed_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv"
+US_deaths_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv"
 
-recovered_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
-
-def clean_US(url):
+# Filter data by country
+def clean_country(url):
+    country = str(input("What country would you like to look at?"))
     data = pd.read_csv(url)
-    data = data.drop(['Lat','Long','Province/State'], axis = 1)
-    US = data['Country/Region'] == 'US'
-    data = data[US]
-    data.dropna()
-    data = data.drop(['Country/Region'],axis = 1)
+    choice = data['Country/Region'] == country
+    data = data[choice]
+    data = data.iloc[:,4:]
     data = data.sum()
-    return data
+    days = np.arange(len(data))
+    choice = str(input("Would you like to print the data? Y/N "))
+    if choice == 'Y':
+        return days, data, print(data)
+    else:
+        return days, data
+
+# Filter data by state in U.S
+def clean_state(url):
+    data = pd.read_csv(url)
+    state = str(input("Name your state: "))
+    filtER = data['Province_State'] == state
+    data = data[filtER]
+    data = data.iloc[:,11:]
+    data = data.sum()
+    days = np.arange(len(data))
+    choice = str(input("Would you like to print the data? Y/N "))
+    if choice == "Y":
+        return days, print(data)
+    else:
+        return days, data
  
 # Reported confirmed,deaths, and recovered cases in the U.S.
 # This model's main assumption is human intervention. 
 
-confirmed = clean_US(confirmed_url)
-deaths = clean_US(deaths_url)
-recovered = clean_US(recovered_url)
-day = np.arange(len(confirmed))
+days, US_confirmed = clean_country(global_confirmed_url)
+days, US_deaths = clean_country(global_deaths_url)
+
+days2, CA_confirmed = clean_state(US_confirmed_url)
+days2, CA_deaths = clean_state(US_deaths_url)
 
 # Variables: M = Carrying Capacity. k = Infection Rate. t_star = Day of inflection point.
 def logistic_model(t,k,t_star,M):
     return (M)/(1+np.exp(-(t-t_star)/k))
     
-def infect(function, x, y, z):
+def analyze(function, x, y, z):
+    location = str(input("What state or country? "))
     t0 = date(2020,1,22)
     tomorrow = date.today() + timedelta(days=1)
     tomorrow_date = tomorrow.strftime("%m/%d/%Y")
@@ -55,7 +77,7 @@ def infect(function, x, y, z):
     mortality_rate = (z[-1])/(y[-1]) # Latest total confirmed deaths / total confirmed cases
     exp_deaths = mortality_rate * carry_cap # Expected end date deaths = MR * Carrying Capacity
 
-    print("The current infected population is", int(confirmed[-1]))
+    print("The current infected population is", int(y[-1]))
     print("The current mortality rate is", int(mortality_rate*100),"%")
     
     # Printing out the data
@@ -91,7 +113,7 @@ def infect(function, x, y, z):
     plt.scatter(days_til_tomorrow, exp_inf, linewidth = 1, color = 'k', label = "Tomorrow's Prediction")
     plt.plot(z, [logistic_model(i,rate,t_star,carry_cap) for i in z], linestyle = '--', lw = 2, 
              label = "Logistic Model")
-    plt.title("COVID-19 Logistic Curve in U.S", fontsize = 15)
+    plt.title("COVID-19 Logistic Curve in  " + location, fontsize = 15)
     plt.legend(fontsize = 13)
     plt.xlabel("Days since Jan 22nd 2020", fontsize = 13)
     plt.ylabel("Total Number of Infected People", fontsize = 13)
@@ -104,4 +126,5 @@ def infect(function, x, y, z):
     print("The expected end date mortality rate is", round(EndDate_MR,2),"%")
     
    #Calling the function
-   infect(logistic_model, day, confirmed, deaths)
+   analyze(logistic_model, days, US_confirmed, US_deaths)
+   analyze(logistic_model, days2, CA_confirmed, CA_deaths)
