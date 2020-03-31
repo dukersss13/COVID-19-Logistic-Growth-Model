@@ -9,6 +9,7 @@ from scipy.optimize import fsolve
 plt.style.use('seaborn')
 %matplotlib inline
 
+# The following data sets will be updated daily. (Source: CSSE John Hopkins University).
 global_confirmed_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 global_deaths_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 
