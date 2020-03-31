@@ -24,6 +24,8 @@ Refer to the list of country names or states if needed.
 (Number of infections implies the number of confirmed cases ONLY).
 The outputs are:
 
+The current infected population.
+
 The current mortality rate.
 
 The date with the highest infection rate.
