@@ -138,7 +138,7 @@ def analyze(function, x, y, z):
             days2, state_confirmed, state_deaths = clean_state(US_confirmed_url, US_deaths_url)
             analyze(logistic_model, days2, state_confirmed, state_deaths)
         elif selection == 3:
-            print("Goodbye!")
+            print("Goodbye & stay healthy!")
    
    # Calling the function
    
