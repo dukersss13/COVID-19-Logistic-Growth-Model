@@ -10,10 +10,11 @@ Main data sets are from the World Health Organization. They are csv files of Con
 Sources: https://github.com/dukersss13/COVID-19
 
 # Description
-The model is consisted of three main functions:
+The model is consisted of four main functions:
 The first function cleans and extracts cases from the United States.
 The second is the Logistic Growth function/equation.
 The third uses the outputs from the first two functions and does the computations. 
+The fourth is a main menu function that allows the user to select which country/region they would like to analyze.
 
 (Number of infections implies the number of confirmed cases ONLY).
 The outputs are:
