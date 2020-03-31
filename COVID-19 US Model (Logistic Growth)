@@ -133,11 +133,9 @@ def analyze(function, x, y, z):
         if selection == 1:
             days, country_confirmed, country_deaths = clean_country(global_confirmed_url,global_deaths_url)
             analyze(logistic_model, days, country_confirmed, country_deaths)
-            break
         elif selection == 2:
             days2, state_confirmed, state_deaths = clean_state(US_confirmed_url, US_deaths_url)
             analyze(logistic_model, days2, state_confirmed, state_deaths)
-            break
         elif selection == 3:
             print("Goodbye!")
    
