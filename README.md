@@ -7,6 +7,7 @@ The model is a work in progress. More updates and modifications will be added.
 # Data
 Main data sets are from the CSSE (John Hopkins University). They are csv files of Confirmed, Deaths and Recovered cases around the world. For this particular model, I will be only looking at U.S cases. These data sets are updated daily at 12 A.M ET.
 
+Refer to the list of country names & states for the menu.
 Sources: https://github.com/CSSEGISandData/COVID-19
 
 # Description
