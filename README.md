@@ -1,7 +1,7 @@
 # COVID-19 U.S Model
 
 # Abstract
-The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic in the United States. The main assumption made is human intervention. It is assumed that with cautionary measures and human intervention, the pandemic will eventually approach a Carrying Capacity thus leading the infection rate to tail off. 
+The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. The main assumption made is human intervention. It is assumed that with cautionary measures and human intervention, the pandemic will eventually approach a Carrying Capacity thus leading the infection rate to tail off. 
 The model is a work in progress. More updates and modifications will be added.
 
 # Data
@@ -17,6 +17,9 @@ The first function cleans and extracts cases from the United States.
 The second is the Logistic Growth function/equation.
 The third uses the outputs from the first two functions and does the computations. 
 The fourth is a main menu function that allows the user to select which country/region they would like to analyze.
+Please make sure your spellings of countries/states/provinces are correct in order for the menu to work. 
+
+Refer to the list of country names or states if needed. 
 
 (Number of infections implies the number of confirmed cases ONLY).
 The outputs are:
