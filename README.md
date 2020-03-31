@@ -7,7 +7,7 @@ The model is a work in progress. More updates and modifications will be added.
 # Data
 Main data sets are from the World Health Organization. They are csv files of Confirmed, Deaths and Recovered cases around the world. For this particular model, I will be only looking at U.S cases. These data sets are updated daily at 12 A.M ET.
 
-Sources: https://github.com/dukersss13/COVID-19
+Sources: https://github.com/CSSEGISandData/COVID-19
 
 # Description
 The model is consisted of four main functions:
