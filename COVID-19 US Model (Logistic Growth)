@@ -49,7 +49,7 @@ def clean_state(url1, url2):
     return days, data1, data2
  
 # Reported confirmed,deaths, and recovered cases in the U.S.
-# This model's main assumption is human intervention. 
+# This model's main assumption is human intervention and the recovered/removed population can no longer infect others.
 
 # Variables: M = Carrying Capacity. k = Infection Rate. t_star = Day of inflection point.
 def logistic_model(t,k,t_star,M):
