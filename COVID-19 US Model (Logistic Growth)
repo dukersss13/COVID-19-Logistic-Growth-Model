@@ -16,50 +16,46 @@ US_confirmed_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/ma
 US_deaths_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv"
 
 # Filter data by country
-def clean_country(url):
-    country = str(input("What country would you like to look at?"))
-    data = pd.read_csv(url)
-    choice = data['Country/Region'] == country
-    data = data[choice]
-    data = data.iloc[:,4:]
-    data = data.sum()
-    days = np.arange(len(data))
-    choice = str(input("Would you like to print the data? Y/N "))
-    if choice == 'Y':
-        return days, data, print(data)
-    else:
-        return days, data
+def clean_country(url1, url2):
+    country = str(input("What country would you like to look at? "))
+    data1 = pd.read_csv(url1)
+    data2 = pd.read_csv(url2)
+    choice = data1['Country/Region'] == country
+    data1 = data1[choice]
+    data1 = data1.iloc[:,4:]
+    data1 = data1.sum()
+    days = np.arange(len(data1))
+    data2 = pd.read_csv(url2)
+    data2 = data2[choice]
+    data2 = data2.iloc[:,4:]
+    data2 = data2.sum()
+    days = np.arange(len(data1))
+    return days, data1, data2
 
 # Filter data by state in U.S
-def clean_state(url):
-    data = pd.read_csv(url)
+def clean_state(url1, url2):
+    data1 = pd.read_csv(url1)
+    data2 = pd.read_csv(url2)
     state = str(input("Name your state: "))
-    filtER = data['Province_State'] == state
-    data = data[filtER]
-    data = data.iloc[:,11:]
-    data = data.sum()
-    days = np.arange(len(data))
-    choice = str(input("Would you like to print the data? Y/N "))
-    if choice == "Y":
-        return days, print(data)
-    else:
-        return days, data
+    filtER = data1['Province_State'] == state
+    data1 = data1[filtER]
+    data2 = data2[filtER]
+    data1 = data1.iloc[:,11:]
+    data2 = data2.iloc[:,11:]
+    data1 = data1.sum()
+    data2 = data2.sum()
+    days = np.arange(len(data1))
+    return days, data1, data2
  
 # Reported confirmed,deaths, and recovered cases in the U.S.
 # This model's main assumption is human intervention. 
-
-days, US_confirmed = clean_country(global_confirmed_url)
-days, US_deaths = clean_country(global_deaths_url)
-
-days2, CA_confirmed = clean_state(US_confirmed_url)
-days2, CA_deaths = clean_state(US_deaths_url)
 
 # Variables: M = Carrying Capacity. k = Infection Rate. t_star = Day of inflection point.
 def logistic_model(t,k,t_star,M):
     return (M)/(1+np.exp(-(t-t_star)/k))
     
 def analyze(function, x, y, z):
-    location = str(input("What state or country? "))
+    location = str(input("Region name for your plot: "))
     t0 = date(2020,1,22)
     tomorrow = date.today() + timedelta(days=1)
     tomorrow_date = tomorrow.strftime("%m/%d/%Y")
@@ -78,7 +74,7 @@ def analyze(function, x, y, z):
     exp_deaths = mortality_rate * carry_cap # Expected end date deaths = MR * Carrying Capacity
 
     print("The current infected population is", int(y[-1]))
-    print("The current mortality rate is", int(mortality_rate*100),"%")
+    print("The current mortality rate is", round((mortality_rate*100),0),"%")
     
     # Printing out the data
     t_starDate = t0 + timedelta(days= t_star)
@@ -96,7 +92,7 @@ def analyze(function, x, y, z):
     print("The estimated number of deaths for", tomorrow_date, "is", tmr_exp_deaths,"people")
         
     # Solving & predicting the end date
-    sol = int(fsolve(lambda x : logistic_model(x,rate,t_star,carry_cap) - int(carry_cap), t_star))
+    sol = int(fsolve(lambda x : function(x,rate,t_star,carry_cap) - int(carry_cap), t_star))
     EndDate = t0 + timedelta(days= sol)
     EndDatenew = EndDate.strftime("%m/%d/%Y")
     EndDate_MR = (exp_deaths/carry_cap)*100
@@ -113,7 +109,7 @@ def analyze(function, x, y, z):
     plt.scatter(days_til_tomorrow, exp_inf, linewidth = 1, color = 'k', label = "Tomorrow's Prediction")
     plt.plot(z, [logistic_model(i,rate,t_star,carry_cap) for i in z], linestyle = '--', lw = 2, 
              label = "Logistic Model")
-    plt.title("COVID-19 Logistic Curve in  " + location, fontsize = 15)
+    plt.title("COVID-19 Logistic Curve in "+ location, fontsize = 15)
     plt.legend(fontsize = 13)
     plt.xlabel("Days since Jan 22nd 2020", fontsize = 13)
     plt.ylabel("Total Number of Infected People", fontsize = 13)
@@ -123,8 +119,29 @@ def analyze(function, x, y, z):
     plt.show()
     print("The expected end date is", EndDatenew)
     print("The expected number of deaths is", int(exp_deaths))
-    print("The expected end date mortality rate is", round(EndDate_MR,2),"%")
+    print("The expected end date mortality rate is", round(EndDate_MR,0),"%")
     
-   #Calling the function
-   analyze(logistic_model, days, US_confirmed, US_deaths)
-   analyze(logistic_model, days2, CA_confirmed, CA_deaths)
+   # Main menu function that bridges everything together
+   
+   def menu(global_confirmed_url,global_deaths_url, US_confirmed_url, US_deaths_url):
+    selection = 0
+    while selection != 3:
+        print("1. Analyze a Country")
+        print("2. Analyze a U.S region")
+        print("3. Quit")
+        selection = int(input("Please enter a selection: "))
+        if selection == 1:
+            days, country_confirmed, country_deaths = clean_country(global_confirmed_url,global_deaths_url)
+            analyze(logistic_model, days, country_confirmed, country_deaths)
+            break
+        elif selection == 2:
+            days2, state_confirmed, state_deaths = clean_state(US_confirmed_url, US_deaths_url)
+            analyze(logistic_model, days2, state_confirmed, state_deaths)
+            break
+        elif selection == 3:
+            print("Goodbye!")
+   
+   # Calling the function
+   
+   menu(global_confirmed_url, global_deaths_url, US_confirmed_url, US_deaths_url)
+            break
