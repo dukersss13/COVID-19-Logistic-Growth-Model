@@ -80,7 +80,7 @@ def analyze(function, x, y, z):
     # Printing out the data
     t_starDate = t0 + timedelta(days= t_star)
     print("The infection rate is", round(rate,0),"with the standard error of", round(errors[0],3))
-    print("The date with the highest infection rate",t_starDate, "with the standard error of", round(errors[1],3))
+    print("The date with the highest infection rate",t_starDate)
     print("The estimated carrying capacity is", int(carry_cap),"people with the standard error of", round(errors[2],3))
     
     # Predicting tomorrow's infections & deaths
