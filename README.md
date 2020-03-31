@@ -31,8 +31,8 @@ The expected number of deaths for the following day.
 
 The logistic growth plot.
 
-The expected end date.
+The expected end date (the first day without infections/new cases).
 
-The expected number of deaths by that date.
+The expected number of deaths by the end date.
 
-The expected mortality rate by that date.
+The expected mortality rate by the end date.
