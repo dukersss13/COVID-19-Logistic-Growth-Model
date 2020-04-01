@@ -1,4 +1,4 @@
-# COVID-19 U.S Model
+# COVID-19 Model
 
 # Abstract
 The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. It is assumed that with cautionary measures, human intervention and the recovered/removed population cannot carry or infect others, the pandemic will eventually approach a Carrying Capacity (a horizontal asymptote), causing the infection rate to tail off. 
