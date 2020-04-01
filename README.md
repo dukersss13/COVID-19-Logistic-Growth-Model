@@ -32,9 +32,9 @@ The date with the highest infection rate.
 
 The estimated carrying capacity.
 
-The total number of infections for the following day.
+The expected number of new cases for the following day.
 
-The expected number of deaths for the following day.
+The expected number of new deaths for the following day.
 
 The logistic growth plot.
 
