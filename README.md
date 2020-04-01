@@ -1,7 +1,7 @@
 # COVID-19 U.S Model
 
 # Abstract
-The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. The main assumption made is human intervention. It is assumed that with cautionary measures and human intervention, the pandemic will eventually approach a Carrying Capacity thus leading the infection rate to tail off. 
+The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. The main assumption made is human intervention. It is assumed that with cautionary measures, human intervention and the recovered/removed population cannot carry or infect others, the pandemic will eventually approach a Carrying Capacity thus leading the infection rate to tail off. 
 The model is a work in progress. More updates and modifications will be added.
 
 # Data
