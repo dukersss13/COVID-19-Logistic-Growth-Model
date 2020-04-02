@@ -1,13 +1,11 @@
 # COVID-19 Model
 
 # Abstract
-The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. It is assumed that with cautionary measures, human intervention and the recovered/removed population cannot carry or infect others, the pandemic will eventually approach a Carrying Capacity (a horizontal asymptote), causing the infection rate to tail off. 
+The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. It is assumed that with cautionary measures, human intervention and the recovered/removed population cannot carry or infect others, the pandemic will eventually approach a Carrying Capacity (a horizontal asymptote) and flattens the number of new infections/cases. 
 The model is a work in progress. More updates and modifications will be added.
 
 # Data
 Main data sets are from the CSSE (John Hopkins University). A set of data will contain global confirmed cases and deaths. The other will be consisted of confirmed and deaths cases in the U.S. These data sets are updated daily at 12 A.M ET.
-
-Refer to the list of country names & states for the menu.
 
 Sources: https://github.com/CSSEGISandData/COVID-19
 
@@ -34,12 +32,14 @@ The estimated carrying capacity.
 
 The expected number of new cases for the following day.
 
-The expected number of new deaths for the following day.
+The estimated number of new deaths for the following day.
 
 The logistic growth plot.
 
-The expected end date (the first day without infections/new cases).
+The dat with where total number of infections peak + the count of cases.
 
-The expected number of deaths by the end date.
+The estimated end date (the first day without infections/new cases).
 
-The expected mortality rate by the end date.
+The estimated number of deaths by the end date.
+
+The estimated mortality rate by the end date.
