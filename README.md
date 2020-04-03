@@ -13,7 +13,7 @@ Sources: https://github.com/CSSEGISandData/COVID-19
 The model is consisted of four main functions:
 The first function cleans and extracts cases from the United States.
 The second is the Logistic Growth function/equation.
-The third uses the outputs from the first two functions and does the computations. 
+The third uses the outputs from the first two functions and runs the logistic computation. 
 The fourth is a main menu function that allows the user to select which country/region they would like to analyze.
 Please make sure your spellings of countries/states/provinces are correct in order for the menu to work. 
 
@@ -36,10 +36,12 @@ The estimated number of new deaths for the following day.
 
 The logistic growth plot.
 
-The dat with where total number of infections peak + the count of cases.
+The date with peak infections.
 
 The estimated end date (the first day without infections/new cases).
 
 The estimated number of deaths by the end date.
 
 The estimated mortality rate by the end date.
+
+*Note: Certain countries/regions/states will not have sufficient data for the algorithm to fully run.
