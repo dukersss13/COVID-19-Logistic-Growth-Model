@@ -20,25 +20,25 @@ Please make sure your spellings of countries/states/provinces are correct in ord
 Refer to the list of country names or states if needed. 
 
 (Number of infections implies the number of confirmed cases ONLY).
-The outputs are:
+The results are:
 
-The current infected population.
+The current infected population. (From the latest data of confirmed cases).
 
-The current mortality rate.
+The current mortality rate. (Latest number of deaths / Latest number of confirmed cases).
 
-The date with the highest infection rate.
+The date with the highest infection rate. (t* from Logistic Model).
 
-The estimated carrying capacity.
+The estimated carrying capacity. (M or carrying capacity from Logistic Model).
 
-The expected number of new cases for the following day.
+The expected number of new cases for the following day. (Estimatation made by plugging tomorrow's date into the Logistic Function)
 
-The estimated number of new deaths for the following day.
+The estimated number of new deaths for the following day. (New confirmed cases from the last 2 days * mortality rate. Changes will be made to improve the accuracy of this output). 
 
 The logistic growth plot.
 
-The date with peak infections.
+The date with peak infections. (Run future dates into the Logistic Function & taking the date with the maximum total confirmed cases).
 
-The estimated number of deaths by the end date.
+The estimated number of deaths by the end date. (Estimated number of deaths before the infection rate tapers).
 
 The estimated mortality rate by the end date.
 
