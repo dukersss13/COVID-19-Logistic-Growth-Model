@@ -38,8 +38,6 @@ The logistic growth plot.
 
 The date with peak infections.
 
-The estimated end date (the first day without infections/new cases).
-
 The estimated number of deaths by the end date.
 
 The estimated mortality rate by the end date.
