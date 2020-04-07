@@ -1,7 +1,7 @@
 # COVID-19 Model
 
 # Abstract
-The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. It is assumed that with cautionary measures, human intervention and the recovered/removed population cannot carry or infect others, the pandemic will eventually approach a Carrying Capacity (a horizontal asymptote) and flattens the number of new infections/cases. 
+The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. It is assumed that with cautionary measures, human intervention and the recovered/removed population cannot carry or infect others, the pandemic will eventually approach a Carrying Capacity thus causing the infection rate to taper. 
 The model is a work in progress. More updates and modifications will be added.
 
 # Data
@@ -42,4 +42,4 @@ The estimated number of deaths by the end date.
 
 The estimated mortality rate by the end date.
 
-*Note: Certain countries/regions/states will not have sufficient data for the algorithm to fully run.
+*Note: Certain countries/regions/states will not have sufficient data for the algorithm to fully run. 
