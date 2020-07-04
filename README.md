@@ -1,4 +1,4 @@
-# COVID-19 Model
+# COVID-19 Logistic Growth Model
 
 # Abstract
 The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. It is assumed that with cautionary measures, human intervention and the recovered/removed population cannot carry or infect others, the pandemic will eventually approach a Carrying Capacity thus causing the infection rate to taper. 
