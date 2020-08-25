@@ -2,7 +2,6 @@
 
 # Abstract
 The following model uses Logistic Growth to model the trend of the novel COVID-19 pandemic. It is assumed that with cautionary measures, human intervention and the recovered/removed population cannot carry or infect others, the pandemic will eventually approach a Carrying Capacity thus causing the infection rate to taper. 
-The model is a work in progress. More updates and modifications will be added.
 
 # Data
 Main data sets are from the CSSE (John Hopkins University). A set of data will contain global confirmed cases and deaths. The other will be consisted of confirmed and deaths cases in the U.S. These data sets are updated daily at 12 A.M ET.
